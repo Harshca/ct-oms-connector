@@ -1,15 +1,14 @@
 deployAs:
-  - name: service
+  - name: ct-oms-connector
     applicationType: service
-    endpoint: /service
+    endpoint: /omsService
     scripts:
-      postDeploy: npm install && npm run build && npm run connector:post-deploy
-      preUndeploy: npm install && npm run build && npm run connector:pre-undeploy
+      postDeploy: npm install && npm run build && npm run start
+      preUndeploy: npm install && npm run build && npm run start
     configuration:
       standardConfiguration:
         - key: CTP_REGION
           description: commercetools Composable Commerce API region
-      securedConfiguration:
         - key: CTP_PROJECT_KEY
           description: commercetools Composable Commerce project key
         - key: CTP_CLIENT_ID
@@ -18,4 +17,3 @@ deployAs:
           description: commercetools Composable Commerce client secret
         - key: CTP_SCOPE
           description: commercetools Composable Commerce client scope
-          
