@@ -4,7 +4,7 @@ deployAs:
     endpoint: /omsService
     scripts:
       postDeploy: npm install --production && npm run build && npm run start:prod
-      preUndeploy: 
+      preUndeploy: npm install
     configuration:
       standardConfiguration:
         - key: CTP_REGION
