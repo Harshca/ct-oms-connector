@@ -3,8 +3,8 @@ deployAs:
     applicationType: service
     endpoint: /omsService
     scripts:
-      postDeploy: npm install && npm run build && npm run start
-      preUndeploy: npm install && npm run build && npm run start
+      postDeploy: npm install --production && npm run build && npm run start
+      preUndeploy: 
     configuration:
       standardConfiguration:
         - key: CTP_REGION
