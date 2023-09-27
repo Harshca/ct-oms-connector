@@ -1,6 +1,6 @@
 deployAs:
   - name: omsservice
-    applicationType: omsservice
+    applicationType: service
     endpoint: /
     scripts:
       postDeploy: npm install --production && npm run build && npm run start:prod
