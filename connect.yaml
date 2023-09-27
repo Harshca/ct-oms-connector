@@ -1,5 +1,5 @@
 deployAs:
-  - name: ct-oms-connector
+  - name: omsservice
     applicationType: omsservice
     endpoint: /
     scripts:
