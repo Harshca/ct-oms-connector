@@ -1,7 +1,7 @@
 deployAs:
   - name: ct-oms-connector
-    applicationType: service
-    endpoint: /omsService
+    applicationType: omsservice
+    endpoint: /
     scripts:
       postDeploy: npm install --production && npm run build && npm run start:prod
       preUndeploy: npm install
