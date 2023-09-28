@@ -38,7 +38,7 @@ export async function createOrderSubmitExtension(
         key: ORDER_SUBMIT_EXTENSION_KEY,
         destination: {
           type: 'HTTP',
-          url: applicationUrl,
+          url: `${applicationUrl}/service/submitOrder`,
         },
         triggers: [
           {
