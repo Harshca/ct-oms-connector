@@ -10,8 +10,7 @@ serviceRouter.post('/submitOrder', async (req, res) => {
   // const response = await submitOrder(req.body.resource.obj.id);
   // res.status(response?.statusCode || 400);
   submitOrder(req.body.resource.obj.id);
-  res.status(200);
-  res.send();
+  res.sendStatus(200);
 });
 
 export default serviceRouter;
