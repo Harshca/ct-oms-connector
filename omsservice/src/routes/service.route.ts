@@ -9,8 +9,12 @@ serviceRouter.post('/submitOrder', async (req, res) => {
   logger.info(JSON.stringify(req.body.resource.obj.id));
   const response = await submitOrder(req.body.resource.obj.id);
   res.status(response?.statusCode || 400).send({
-    "action": "changeOrderState",
-    "orderState": "Confirmed"
+    "actions": [
+      {
+          "action": "changeOrderState",
+          "orderState": "Confirmed"
+      }
+    ]
   });
 });
 
