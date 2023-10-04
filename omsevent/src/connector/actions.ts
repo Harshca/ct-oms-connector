@@ -1,7 +1,6 @@
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 
-const ORDER_CREATE_SUBSCRIPTION_KEY =
-  'myconnector-orderCreateSubscription';
+const ORDER_CREATE_SUBSCRIPTION_KEY = 'myconnector-orderCreateSubscription';
 
 export async function createOrderCreateSubscription(
   apiRoot: ByProjectKeyRequestBuilder,
@@ -45,8 +44,8 @@ export async function createOrderCreateSubscription(
         },
         messages: [
           {
-            resourceTypeId: 'customer',
-            types: ['CustomerCreated'],
+            resourceTypeId: 'order',
+            types: ['OrderCreated']
           },
         ],
       },
