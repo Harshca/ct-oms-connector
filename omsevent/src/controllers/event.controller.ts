@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CustomError from '../errors/custom.error';
 import { logger } from '../utils/logger.utils';
+import axios from 'axios';
 
 /**
  * Exposed event POST endpoint.
@@ -36,9 +37,24 @@ export const submitOrder = async (request: Request, response: Response) => {
     : undefined;
 
   if (decodedData) {
+    logger.info(decodedData);
+
     const jsonData = JSON.parse(decodedData);
 
-    logger.info(jsonData);
+    try {
+      const response = await axios.post('https://eonqy384i8m5u1.m.pipedream.net', {orderid: jsonData.orderId, event: 'order'})
+      logger.info(response.status);
+      return({ statusCode: response.status })
+    } catch (error) {
+      // Retry or handle the error
+      // Create an error object
+      if (error instanceof Error) {
+        throw new CustomError(
+          400,
+          `Internal server error on event Controller: ${error.stack}`
+        );
+      }
+    }
   }
 
   // Return the response for the client
