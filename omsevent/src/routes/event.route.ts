@@ -6,7 +6,6 @@ const eventRouter: Router = Router();
 
 eventRouter.post('/', async (req, res) => {
   logger.info('Event message received');
-  logger.info(JSON.stringify(req));
   const response = await submitOrder(req, res);
   res.status(response?.statusCode || 400).send();
 });
