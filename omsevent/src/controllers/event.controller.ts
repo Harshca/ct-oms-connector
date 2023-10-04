@@ -24,7 +24,7 @@ export const submitOrder = async (request: Request, response: Response) => {
     throw new CustomError(400, 'Bad request: Wrong No Pub/Sub message format');
   }
 
-  logger.info(request.body);
+  logger.info(JSON.stringify(request.body));
 
   // Receive the Pub/Sub message
   const pubSubMessage = request.body.message;
