@@ -45,7 +45,7 @@ export async function createOrderCreateSubscription(
         messages: [
           {
             resourceTypeId: 'order',
-            types: ['OrderCreated']
+            types: []
           },
         ],
       },
