@@ -4,7 +4,7 @@ import { submitOrder } from '../controllers/event.controller';
 
 const eventRouter: Router = Router();
 
-eventRouter.post('/submitOrder', async (req, res) => {
+eventRouter.post('/', async (req, res) => {
   logger.info('Event message received');
   logger.info(req);
   const response = await submitOrder(req, res);
