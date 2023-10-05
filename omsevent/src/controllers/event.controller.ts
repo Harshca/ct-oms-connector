@@ -42,13 +42,15 @@ export const submitOrder = async (request: Request, response: Response) => {
     const jsonData = JSON.parse(decodedData);
 
     try {
-      const response = await axios.post('https://eonqy384i8m5u1.m.pipedream.net', {orderId: jsonData.order.orderNumber})
-      logger.info(response.status);
+      const response = await axios.post('https://eonqy384i8m5u1.m.pipedream.net', {orderNumber: jsonData.order.orderNumber})
+      logger.info(`event status code ${response.status}`);
       return({ statusCode: response.status })
     } catch (error) {
       // Retry or handle the error
       // Create an error object
       if (error instanceof Error) {
+        logger.info('event error');
+
         throw new CustomError(
           400,
           `Internal server error on event Controller: ${error.stack}`
