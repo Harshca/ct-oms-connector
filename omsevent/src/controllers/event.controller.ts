@@ -42,7 +42,7 @@ export const submitOrder = async (request: Request, response: Response) => {
     const jsonData = JSON.parse(decodedData);
 
     try {
-      const response = await axios.post('https://eonqy384i8m5u1.m.pipedream.net', {orderid: jsonData.orderId, event: 'order'})
+      const response = await axios.post('https://eonqy384i8m5u1.m.pipedream.net', {orderId: jsonData.order.orderNumber})
       logger.info(response.status);
       return({ statusCode: response.status })
     } catch (error) {
