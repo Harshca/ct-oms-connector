@@ -33,14 +33,13 @@ const getAccessToken = async () => {
       grant_type: 'password',
     });
     const url = `https://fctraineu101.sandbox.api.fluentretail.com/oauth/token?${params}`;
-
     const response = await axios.post(url);
-
-  
-    const accessToken = response.data;
-  
-
-    return `${accessToken.access_token}`;
+    const data = response.data;
+    logger.info(
+      '🚀 ~ file: event.controller.ts:38 ~ getAccessToken ~ data:',
+      data
+    );
+    return `${data.access_token}`;
   } catch (error) {
     logger.error('Error fetching access token:');
     throw error;
@@ -67,27 +66,20 @@ export const submitOrder = async (request: Request, response: Response) => {
     : undefined;
 
   if (decodedData) {
-
     const jsonData = JSON.parse(decodedData);
 
     try {
       const currentAccessToken = `${await fetchAccessTokenIfNeeded()}`;
+      const response = await postFluentOrder(`${currentAccessToken}`, jsonData);
+      logger.info('🚀 ~ submitOrder ~ postFluentOrder:', response);
 
-  
-
-        const response = await postFluentOrder(`${currentAccessToken}`, jsonData);
-        logger.info(
-          '🚀 ~ submitOrder ~ postFluentOrder:',
-          response
-        );
-
-        //   const response = await axios.post(
-        //     'https://eonqy384i8m5u1.m.pipedream.net',
-        //     { orderNumber: jsonData.order.orderNumber }
-        //   );
-        //todo integrate fluentcommerce
-        logger.info(`event status code ${response?.statusCode}`);
-        return { statusCode: response?.statusCode };
+      //   const response = await axios.post(
+      //     'https://eonqy384i8m5u1.m.pipedream.net',
+      //     { orderNumber: jsonData.order.orderNumber }
+      //   );
+      //todo integrate fluentcommerce
+      logger.info(`event status code ${response?.statusCode}`);
+      return { statusCode: response?.statusCode };
     } catch (error) {
       // Retry or handle the error
       // Create an error object
@@ -154,11 +146,16 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
     const variables = {
       retailerId: 1,
       customerId: 23,
-      orderRef: `${orderData.order.orderNumber}`+randomInt(15),
+      orderRef: `${orderData.order.orderNumber}` + randomInt(15),
       orderItemRef: `${orderData.order.lineItems[0].variant.sku}`,
       productCatalogueRef: '{{product_catalogue_ref}}',
       productRef: `${orderData.order.lineItems[0].variant.sku}`,
     };
+    logger.info(
+      '🚀 ~ file: event.controller.ts:154 ~ postFluentOrder ~ variables:',
+      variables
+    );
+
     const data = JSON.stringify({
       query: query,
       variables: variables,
@@ -176,7 +173,7 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
     const fluentResponse = await axios(config);
     if (fluentResponse.status == 200) {
       logger.info(`event status code ${fluentResponse.status}`);
-      logger.info(`event data `, fluentResponse);
+      logger.info(`event data `, fluentResponse.data);
       return { statusCode: fluentResponse.status, data: fluentResponse.data };
     }
   } catch (err) {
