@@ -63,12 +63,12 @@ export const submitOrder = async (request: Request, response: Response) => {
 
   const decodedData = pubSubMessage.data
     ? Buffer.from(pubSubMessage.data, 'base64').toString().trim()
-    : undefined;
+    : "{}";
 
-  if (decodedData) {
-    const jsonData = JSON.parse(decodedData);
-    logger.info(jsonData);
-    logger.info(decodedData);
+  const jsonData = JSON.parse(decodedData);
+
+  if (decodedData && `${jsonData.type}` === 'OrderCreated') {
+    
     logger.info(
       '🚀 ~ file: event.controller.ts:70 ~ submitOrder ~ jsonData:',
       jsonData
@@ -98,6 +98,8 @@ export const submitOrder = async (request: Request, response: Response) => {
         );
       }
     }
+  }else{
+    logger.info(`🚀 ~ file: event.controller.ts:70 ~ eventReceived: ${jsonData.type} and eventData:` , jsonData ?? 'empty');
   }
 
   // Return the response for the client
@@ -161,7 +163,7 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
       customerId: 23,
       orderRef: `${orderData?.order?.orderNumber}`,
       orderItemRef: `${orderData.order.lineItems[0].variant.sku}`,
-      productCatalogueRef: '{{product_catalogue_ref}}',
+      productCatalogueRef: 'FCRG:PC:MASTER',
       productRef: `${orderData.order.lineItems[0].variant.sku}`,
     };
 
