@@ -67,6 +67,12 @@ export const submitOrder = async (request: Request, response: Response) => {
 
   if (decodedData) {
     const jsonData = JSON.parse(decodedData);
+    logger.info(jsonData);
+    logger.info(decodedData);
+    logger.info(
+      '🚀 ~ file: event.controller.ts:70 ~ submitOrder ~ jsonData:',
+      jsonData
+    );
 
     try {
       const currentAccessToken = `${await fetchAccessTokenIfNeeded()}`;
@@ -79,6 +85,7 @@ export const submitOrder = async (request: Request, response: Response) => {
       //   );
       //todo integrate fluentcommerce
       logger.info(`event status code ${response?.statusCode}`);
+
       return { statusCode: response?.statusCode };
     } catch (error) {
       // Retry or handle the error
@@ -146,7 +153,7 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
     const variables = {
       retailerId: 1,
       customerId: 23,
-      orderRef: `${orderData.order.orderNumber}` + randomInt(15),
+      orderRef: `${orderData.order.orderNumber}`,
       orderItemRef: `${orderData.order.lineItems[0].variant.sku}`,
       productCatalogueRef: '{{product_catalogue_ref}}',
       productRef: `${orderData.order.lineItems[0].variant.sku}`,
@@ -155,6 +162,7 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
       '🚀 ~ file: event.controller.ts:154 ~ postFluentOrder ~ variables:',
       variables
     );
+    logger.info(variables);
 
     const data = JSON.stringify({
       query: query,
