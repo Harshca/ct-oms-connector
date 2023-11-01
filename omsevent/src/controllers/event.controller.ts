@@ -150,19 +150,26 @@ const postFluentOrder = async (currentAccessToken: string, orderData: any) => {
         }
       }
     `;
+
+    logger.info(
+      '🚀 ~ file: event.controller.ts:154 ~ postFluentOrder ~ orderData:',
+      orderData
+    );
+    
     const variables = {
       retailerId: 1,
       customerId: 23,
-      orderRef: `${orderData.order.orderNumber}`,
+      orderRef: `${orderData?.order?.orderNumber}`,
       orderItemRef: `${orderData.order.lineItems[0].variant.sku}`,
       productCatalogueRef: '{{product_catalogue_ref}}',
       productRef: `${orderData.order.lineItems[0].variant.sku}`,
     };
+
     logger.info(
       '🚀 ~ file: event.controller.ts:154 ~ postFluentOrder ~ variables:',
       variables
     );
-    logger.info(variables);
+
 
     const data = JSON.stringify({
       query: query,
